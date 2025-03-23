@@ -39,19 +39,6 @@ cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1440)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
 cap.set(cv2.CAP_PROP_FPS, 60)
 
-# Read one frame to get frame size
-ret, frame = cap.read()
-
-frame_height, frame_width = frame.shape[:2]
-fps = 30
-output_filename = 'prime_cut_opencv.mp4'
-
-# Create VideoWriter
-fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-out = cv2.VideoWriter(output_filename, fourcc, fps, (frame_width, frame_height))
-
-print(f'Recording started: {output_filename}')
-
 # Main loop
 while True:
     ret, frame = cap.read()
@@ -67,12 +54,10 @@ while True:
         cv2.line(frame, (x1, 0), (x1, height), (0, 0, 255), 2)
         cv2.line(frame, (x2, 0), (x2, height), (0, 0, 255), 2)
 
-    out.write(frame)  # Write frame to video
-    cv2.imshow('Prime Cut', frame)
+    cv2.imshow('Prime Cut (press q to quit)', frame)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
 cap.release()
-out.release()
 cv2.destroyAllWindows()
